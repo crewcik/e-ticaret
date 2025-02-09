@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
     Navbar as ReactstrapNavbar,
     NavbarBrand,
@@ -9,82 +9,86 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
+import 'primeicons/primeicons.css';
 
 const Navbar = () => {
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
+    const [user, setUser] = useState({ username: 'Crew' });
+    const [shopBasketCount, setBasketCount] = useState(0);
+    const { id } = useParams();
 
     const toggle = () => setIsOpen(!isOpen);
 
-    const link = [
+    const basketShop = () => {
+        if (shopBasketCount >= 20) {
+            alert('Amına çaktığım daha ne kadar alacaksın?');
+            return;
+        }
+        setBasketCount(prevCount => prevCount + 1);
+    };
+
+    const links = [
         { name: "Ana Sayfa", path: "/" },
         { name: "Hakkımızda", path: "/Hakkımızda" },
-        { name: "Ürünler", path: "/Ürünlerimiz" },
+        { name: "Ürünler", path: "/Ürünler" },
         { name: "Destek", path: "/Destek" },
+        { name: "Biz Sizi Arayalım", path: "/Arayalım" },
     ];
 
-    const navbarStyle = {
-        backgroundColor: '#343a40', 
-        borderBottom: '2px solid #333', 
-    };
-
-    const navLinkStyle = {
-        fontSize: '1.1rem',
-        color: '#fff',
-    };
-
-    const navLinkHoverStyle = {
-        color: '#ff8c00',
-    };
-
-    const buttonStyle = {
-        backgroundColor: '#dc3545', 
-        color: 'white',
-        padding: '10px 20px',
-        fontSize: '1rem',
-        borderRadius: '5px',
-    };
-
-    const buttonHoverStyle = {
-        backgroundColor: '#c82333', 
-    };
-
     return (
-        <ReactstrapNavbar style={navbarStyle} dark expand="lg">
-            <NavbarBrand tag={Link} to="/" style={{ fontWeight: 'bold', fontSize: '1.5rem', color: '#fff' }}>
-                NebulaX
-            </NavbarBrand>
-            <NavbarToggler onClick={toggle} />
-            <Collapse isOpen={isOpen} navbar>
-                <Nav className="me-auto" navbar>
-                    {link.map((item, index) => (
-                        <NavItem key={index}>
-                            <NavLink
-                                tag={Link}
-                                to={item.path}
-                                style={navLinkStyle}
-                                onMouseEnter={(e) => e.target.style.color = navLinkHoverStyle.color}
-                                onMouseLeave={(e) => e.target.style.color = navLinkStyle.color}>
-                                {item.name}
-                            </NavLink>
-                        </NavItem>
-                    ))}
-                    {!isLogin && (
+        <ReactstrapNavbar style={{ backgroundColor: '#2c3e50', padding: '10px' }} expand="lg">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                <NavbarBrand tag={Link} to="/" style={{ color: '#ecf0f1', fontSize: '24px', fontWeight: 'bold' }}>
+                    NebulaX
+                </NavbarBrand>
+                <NavbarToggler onClick={toggle} style={{ backgroundColor: '#ecf0f1' }} />
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav style={{ display: 'flex', gap: '15px', margin: '0 auto' }} navbar>
+                        {links.map((item, index) => (
+                            <NavItem key={index}>
+                                <NavLink tag={Link} to={item.path} style={{ color: '#ecf0f1', fontSize: '18px' }}>
+                                    {item.name}
+                                </NavLink>
+                            </NavItem>
+                        ))}
+                    </Nav>
+                    <Nav style={{ display: 'flex', gap: '15px', alignItems: 'center' }} navbar>
                         <NavItem>
-                            <NavLink
-                                tag={Link}
-                                to="/Giriş"
-                                style={buttonStyle}
-                                onMouseEnter={(e) => e.target.style.backgroundColor = buttonHoverStyle.backgroundColor}
-                                onMouseLeave={(e) => e.target.style.backgroundColor = buttonStyle.backgroundColor}>
-                                Üye Girişi
+                            <NavLink onClick={basketShop} style={{ cursor: 'pointer', color: '#ecf0f1', fontSize: '20px' }}>
+                                <i className="pi pi-search"></i>
                             </NavLink>
                         </NavItem>
-                    )}
-                </Nav>
-            </Collapse>
+                        <NavItem style={{ position: 'relative' }}>
+                            <NavLink onClick={basketShop} style={{ cursor: 'pointer', color: '#ecf0f1', fontSize: '20px' }}>
+                                {shopBasketCount > 0 && (
+                                    <span style={{
+                                        position: 'absolute',
+                                        top: '-5px',
+                                        right: '-10px',
+                                        backgroundColor: 'red',
+                                        color: 'white',
+                                        borderRadius: '50%',
+                                        padding: '5px 8px',
+                                        fontSize: '12px'
+                                    }}>
+                                        {shopBasketCount}
+                                    </span>
+                                )}
+                                <i className="pi pi-shopping-cart"></i>
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink tag={Link} to={`/Profile:${id}`} style={{ cursor: 'pointer', color: '#ecf0f1', fontSize: '20px' }}>
+                                <i className="pi pi-user"></i>
+                                {isLogin && <span style={{ marginLeft: '5px', fontSize: '16px' }}>{user.username}</span>}
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                </Collapse>
+            </div>
         </ReactstrapNavbar>
     );
-}
+};
 
 export default Navbar;

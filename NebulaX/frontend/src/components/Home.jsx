@@ -1,7 +1,13 @@
+import Shoping from "./Shoping";
+import Slider from "./Slider";
+import ComSlider from "./ComSlider";
+
 const Home = () => {
     return (
         <div>
-            <h1>Home</h1>
+            <Slider />
+            <ComSlider />
+            <Shoping />
         </div>
     );
 };
