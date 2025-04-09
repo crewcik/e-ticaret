@@ -3,7 +3,7 @@ import { Button } from 'reactstrap';
 
 const Profiles = () => {
     const [profiles, setProfiles] = useState(
-        { id: 1, name: 'Crew', first_name: 'Yiğit', last_name: 'Crew', phone: '0507 312 2828', email: 'crewdevcik@gmail.com', role: 'Admin', status: 'Aktif', createAt: Date.now(), img: 'https://img.freepik.com/free-vector/y-letter-colorful-logo-gradient-vector-designs_343694-1188.jpg' },
+        { id: 1, name: 'Crew', first_name: 'Yiğit', last_name: 'Crew', phone: '0123 456 78 90', email: 'crewdevcik@gmail.com', role: 'Admin', status: 'Aktif', createAt: Date.now(), img: 'https://img.freepik.com/free-vector/y-letter-colorful-logo-gradient-vector-designs_343694-1188.jpg' },
     );
 
     const profileContainerStyle = {
