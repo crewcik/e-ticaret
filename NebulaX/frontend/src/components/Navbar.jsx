@@ -22,7 +22,7 @@ const Navbar = () => {
 
     const basketShop = () => {
         if (shopBasketCount >= 20) {
-            alert('Amına çaktığım daha ne kadar alacaksın?');
+            alert('Sepetiniz de 20 üründen fazlası olamaz.'); // silebilirsiniz.
             return;
         }
         setBasketCount(prevCount => prevCount + 1);
